@@ -11,6 +11,7 @@ app.get('/health', (req, res) => {
    res.send('You keep using that word. I do not think it means what you think it means.');
 });
 
+//Not needed, just pulls all the customers from customers.json
 app.get('/listCustomers', (req, res) => {
   fs.readFile('customers.json',  (err, data) => {
   console.log(data);
@@ -38,8 +39,8 @@ app.post('/addOrder', (req, res) => {
 })   
 });
 
+//Takes a param request for customer name and pulls all orders with given name on it
 app.get('/listOrdersByCustomer/:customerName', (req, res) => 
-  
   fs.readFile('orders.json', (err, data) => {
     data = JSON.parse(data);
     var arr = [];
@@ -47,7 +48,6 @@ app.get('/listOrdersByCustomer/:customerName', (req, res) =>
       var keys = Object.keys(entry);
       if(data[entry[keys[0]]].customerFname == req.params.customerName){
         arr.push(entry);
-        console.log(entry);
       }
     })
       res.send(arr);
@@ -75,9 +75,6 @@ app.get('/listOrdersByCustomer/:customerName', (req, res) =>
      })
     })
   });
-
-
-
 
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
